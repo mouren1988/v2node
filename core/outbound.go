@@ -44,14 +44,3 @@ func buildDnsOutbound() (*core.OutboundHandlerConfig, error) {
 	outboundDetourConfig.Tag = "dns_out"
 	return outboundDetourConfig.Build()
 }
-
-// buildEgressOutbound 构建带 sendThrough（绑定出站源 IP）的 freedom outbound。
-//
-// 用于「只热替换单个节点的出站 outbound」—— 无需重启整个核心。
-func buildEgressOutbound(nodeID int, sendThrough string) (*core.OutboundHandlerConfig, error) {
-	outboundDetourConfig := &conf.OutboundDetourConfig{}
-	outboundDetourConfig.Protocol = "freedom"
-	outboundDetourConfig.Tag = fmt.Sprintf("egress-%d", nodeID)
-	outboundDetourConfig.SendThrough = &sendThrough
-	return outboundDetourConfig.Build()
-}
